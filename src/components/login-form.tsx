@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {useFormik} from 'formik'
+import {Text, Button, PasswordInput, PasswordInputProps} from '@mantine/core'
 import * as yup from 'yup'
 
 function LoginForm() {
@@ -8,10 +9,8 @@ function LoginForm() {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
             email: '',
             password: '',
-            organizationCode: ''
         },
         onSubmit: values => {
             console.log(values)
@@ -19,83 +18,50 @@ function LoginForm() {
             setSubmitted(true)
         },
         validationSchema: yup.object({
-            name: yup.string().required('Required'),
-            email: yup.string().email('Invalid email address').required('Required'),
-            password: yup.string().required('Required'),
-            organizationCode: yup.string().required('Required')
+            email: yup.string().email('Invalid email address').required('An email is required.'),
+            password: yup.string().required('A password is required.'),
         }),
     });
 
     return (
         <div>
-            <div style={{display:'flex', flexDirection:'column', height:'vh', justifyContent:'center', alignItems:'center'}}>
-            <div hidden={!submitted} className="alert alert-primary" role="alert">
-                {message}
-            </div>
-            <h1>Sign Up</h1>
-            <form onSubmit={formik.handleSubmit}>
-                <div style={{display:'block'}}>
-                    <p>Your Name</p>
-                    <input
-                        type="text"
-                        name="name"
-                        className="form-control"
-                        placeholder="Your name"
-                        value={formik.values.name}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.name && (
-                    <div className="text-danger">{formik.errors.name}</div>
-                    )}
-                <div style={{display:'block'}}>
-                    <p>Organization Code</p>
-                    <input
-                        type="text"
-                        name="organizationCode"
-                        className="form-control"
-                        placeholder="Your password"
-                        value={formik.values.organizationCode}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.organizationCode && (
-                    <div className="text-danger">{formik.errors.organizationCode}</div>
-                    )}
+            <div style={{display:'flex', flexDirection:'column', width:'100%',height:'100vh', justifyContent:'center', alignItems:'center'}}>
+                <div hidden={!submitted} className="alert alert-primary" role="alert">
+                    {message}
                 </div>
+                <div style={{width: '100%',alignItems:'left'}}>
+                    <Text className='header' style={{paddingBottom: 30}}>Sign Up</Text>
+                    <form onSubmit={formik.handleSubmit}>
+                        <div style={{height: 15}}/>
+                        <div style={{display:'block'}}>
+                            <Text className='formFieldLabel'>Email Address</Text>
+                            <input
+                                type="text"
+                                name="email"
+                                className="form-control"
+                                placeholder="mail@example.com"
+                                value={formik.values.email}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                style={{borderColor: '#cbd5e0'}}
+                            />
+                            {formik.errors.email && <Text className='validationErrorLabel' >{formik.errors.email}</Text>}
+
+                        </div>
+                        <div style={{height: 15}}/>
+                        <div style={{display:'block'}}>
+                            <Text className='formFieldLabel'>Password</Text>
+                            <PasswordInput style={{borderColor: '#cbd5e0',width:'400px', height: '44px'}} name="password" onChange={formik.handleChange} onBlur={formik.handleBlur} radius="md" placeholder={"Enter Password"} value={formik.values.password} size={'lg'} id="your-password" />
+                            {formik.errors.password && <Text className='validationErrorLabel' >{formik.errors.password}</Text>}
+
+                        </div>
+                        <div style={{paddingTop: 20}}>
+                            <Button type="submit" style={{backgroundColor: 'black', height: '44px',width: '400px', borderRadius: 8}}>
+                                <Text className='registrationButtonText'>Sign Up</Text>
+                            </Button>
+                        </div>
+                    </form>
                 </div>
-                <div style={{display:'block'}}>
-                    <p>Email</p>
-                    <input
-                        type="text"
-                        name="email"
-                        className="form-control"
-                        placeholder="your-email@domain.com"
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.email && (
-                    <div className="text-danger">{formik.errors.email}</div>
-                    )}
-                </div>
-                <div style={{display:'block'}}>
-                    <p>Password</p>
-                    <input
-                        type="text"
-                        name="password"
-                        className="form-control"
-                        placeholder="Your password"
-                        value={formik.values.password}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.errors.password && (
-                    <div className="text-danger">{formik.errors.password}</div>
-                    )}
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
             </div>
         </div>
     )
