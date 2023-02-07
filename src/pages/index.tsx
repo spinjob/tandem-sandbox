@@ -7,8 +7,6 @@ import { useState } from 'react';
 import Landing from './Landing.js'
 
 const Index: NextPage = () => {
-  const [userContext, setUserContext] = useState({})
-  
   return(
     <div>
       <Head>

@@ -1,11 +1,11 @@
 import React from 'react'
 import { render, screen } from '@testing-library/react'
-import Home from '../src/pages/index'
+import Index from '../src/pages/index'
 import '@testing-library/jest-dom'
 
-describe('Home', () => {
+describe('Index', () => {
   it('renders a heading', () => {
-    render(<Home />)
+    render(<Index />)
 
     // const heading = screen.getByRole('heading', {
     //   title: /Login Page\.js!/i,
