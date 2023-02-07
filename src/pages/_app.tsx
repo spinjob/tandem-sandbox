@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
-import Head from "next/head";
 import { MantineProvider } from "@mantine/core";
+import { UserProvider } from "@auth0/nextjs-auth0/client";
 import {CustomFonts} from '../../Global.js'
 import "../styles/global.css"
 
@@ -8,12 +8,7 @@ export default function App(props: AppProps) {
   const { Component, pageProps } = props;
 
   return (
-    <>
-      <Head>
-        <title>Page title</title>
-        <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
-      </Head>
-
+    
       <MantineProvider
         withCSSVariables
         withGlobalStyles
@@ -33,9 +28,11 @@ export default function App(props: AppProps) {
           }
         }}
       >
-        <Component {...pageProps} />
+          <UserProvider>
+            <Component {...pageProps} />
+          </UserProvider>
         <CustomFonts />
       </MantineProvider>
-    </>
+
   );
 }

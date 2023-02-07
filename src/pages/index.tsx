@@ -5,6 +5,7 @@ import Head from 'next/head'
 import RegistrationForm from '../components/RegistrationForm'
 import { useState } from 'react';
 import Landing from './Landing.js'
+import { useUser } from '@auth0/nextjs-auth0/client'
 
 const Index: NextPage = () => {
   return(
