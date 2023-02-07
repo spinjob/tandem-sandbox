@@ -2,10 +2,43 @@ import { useState } from 'react';
 import {useFormik} from 'formik'
 import {Text, Button, PasswordInput, Anchor} from '@mantine/core'
 import * as yup from 'yup'
+import axios from 'axios'
 
-function RegistrationForm() {
+function RegistrationForm({toggleLogin}: {toggleLogin: any}) {
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false)
+   
+    const fetchOrganizationDetails = (data: any) => {
+        axios.get(process.env.NEXT_PUBLIC_API_BASE_URL + '/organizations/' + data.organizationCode).then(response=>{
+            console.log(response)
+            registrationHandler(data)
+            return response
+        }).catch(error=>{
+            console.log(error)
+            return false;
+        })
+    }
+
+    const registrationHandler = (data: any) => {
+        const firstName = data.name.split(' ')[0]
+        const lastName = data.name.split(' ')[1]
+
+        axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/signup',
+            {
+                username: data.email,
+                password: data.password,
+                firstName: firstName,
+                lastName: lastName,
+                organization: data.organizationCode
+            }).then(response =>{
+                console.log(response)
+                setMessage('Registration Successful')
+            }).catch(error => {
+                console.log(error)
+                setMessage('Registration Failed. Please confirm your organization code.')
+            })
+
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -15,8 +48,8 @@ function RegistrationForm() {
             organizationCode: ''
         },
         onSubmit: values => {
-            console.log(values)
-            setMessage('Form submitted')
+            fetchOrganizationDetails(values)
+            setMessage('Form submitting')
             setSubmitted(true)
         },
         validationSchema: yup.object({
@@ -96,7 +129,7 @@ function RegistrationForm() {
                     </div>
                     <div style={{height: 15}}/>
                     <div style={{display:'flex', width: '400px', justifyContent:'center', alignItems:'center'}}>
-                        <Text>Already have an account? </Text><div style={{width: '5px'}}/> <Anchor color="gray" underline={true} href="https://mantine.dev/" target="_blank"> Sign In</Anchor>
+                        <Text>Already have an account? </Text><div style={{width: '5px'}}/> <Button onClick={toggleLogin} variant="subtle">Log In</Button>
                     </div>
                    
                     </form>

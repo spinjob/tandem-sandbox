@@ -1,26 +1,25 @@
 import type {NextPage} from 'next'
 import { Text, Image } from '@mantine/core';
+import {UserContext} from '../context/UserContext'
 import Head from 'next/head'
-import RegistrationForm from '../components/registration-form'
+import RegistrationForm from '../components/RegistrationForm'
+import { useState } from 'react';
+import Landing from './Landing.js'
 
-
-const Home: NextPage = () => {
+const Index: NextPage = () => {
+  const [userContext, setUserContext] = useState({})
+  
   return(
     <div>
       <Head>
         <title>Login Page</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div style={{display:'flex', flexDirection:'row'}}>
-      <div style={{width: '60vw', alignContent:'center'}}>
-        <Image src= 'https://i.ibb.co/5rzpBx3/landing-Page.png' style={{width: '100%', height:'100vh'}}/>
-        </div>
-        <div style={{width: '40vw', justifyItems:'center'}}>
-          <RegistrationForm />
-        </div>
+     <div>
+       <Landing/>
       </div>
     </div>
   ) 
 }
 
-export default Home
+export default Index
