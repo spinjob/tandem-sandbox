@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {useFormik} from 'formik'
-import {useRouter} from 'next/navigation'
+import Link from 'next/link'
 import {Text, Button, PasswordInput, Anchor} from '@mantine/core'
 import * as yup from 'yup'
 import axios from 'axios'
@@ -8,7 +8,6 @@ import axios from 'axios'
 function RegistrationForm({toggleLogin}: {toggleLogin: any}) {
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState(false)
-    const router = useRouter()
    
     const fetchOrganizationDetails = (data: any) => {
         axios.get(process.env.NEXT_PUBLIC_API_BASE_URL + '/organizations/' + data.organizationCode).then(response=>{
@@ -28,6 +27,7 @@ function RegistrationForm({toggleLogin}: {toggleLogin: any}) {
         axios.post(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/signup',
             {
                 username: data.email,
+                email: data.email,
                 password: data.password,
                 firstName: firstName,
                 lastName: lastName,
@@ -131,7 +131,7 @@ function RegistrationForm({toggleLogin}: {toggleLogin: any}) {
                     </div>
                     <div style={{height: 15}}/>
                     <div style={{display:'flex', width: '400px', justifyContent:'center', alignItems:'center'}}>
-                        <Text>Already have an account? </Text><div style={{width: '5px'}}/> <Button onClick={()=> router.push('/api/auth/login')} variant="subtle">Log In</Button>
+                        <Text>Already have an account? </Text><div style={{width: '5px'}}/><Link href="/api/auth/login">Log In</Link>
                     </div>
                    
                     </form>

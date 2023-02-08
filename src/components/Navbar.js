@@ -1,4 +1,4 @@
-import { Navbar, createStyles, Group, Code, Image,Text} from "@mantine/core";
+import { Navbar, createStyles, Group, Code, Image,Text, Avatar} from "@mantine/core";
 import { useState, useCallback, useEffect } from "react";
 import {useRouter} from 'next/navigation'
 import {UserContext} from '../context/UserContext'
@@ -73,7 +73,7 @@ const Navigation = ({setView}) => {
       });
 
     const { classes, cx } = useStyles();
-    const [active, setActive] = useState('Billing');
+    const [active, setActive] = useState('Partnerships');
 
     const data = [
         { link: '', label: 'Partnerships' },
@@ -129,8 +129,7 @@ const Navigation = ({setView}) => {
                     <span>Logout</span>
                 </a>
                 <a className={classes.link} onClick={()=> router.push('/api/auth/logout')}>
-                    <div style={{alignItems: 'center', display:'flex', flexDirection: 'row', width: 200, height: 50,borderRadius: '5px', overflow: 'hidden'}}>
-                        <Image style={{width: 30, height: 30}} layout="fill" src={user?.picture}/>
+                    <div style={{alignItems: 'center', display:'flex', flexDirection: 'row', width: 200, height: 50,borderRadius: '5px', overflow: 'hidden'}}>                        <Avatar size={26} radius={26} src={user?.picture}/>
                         <Text style={{paddingLeft: 10}}>{user?.name}</Text>
                     </div>
                 </a>

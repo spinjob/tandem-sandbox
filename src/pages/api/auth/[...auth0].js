@@ -6,6 +6,7 @@ export default handleAuth(
             await handleLogin(req, res, {
                 returnTo: "/home"
             })
+        }
+
     }
-}
 );
