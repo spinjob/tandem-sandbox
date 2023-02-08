@@ -18,23 +18,6 @@ const Home = () => {
         setSelectedView(e.label)
     }
 
-    const setUserMetadata = useCallback(async (id) => {
-        if(dbUser){
-            axios.put(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/' + id, {
-                email: user.email,
-                name: user.name,
-                auth0Id: user.sub
-            }).then((res) => {
-                console.log(res)
-            }
-            ).catch((err) => {
-                console.log(err)
-            }
-            )   
-        }
-    } , [dbUser])
-
-
     useEffect(() => {
         if(user?.email){
             console.log('user found')
@@ -42,7 +25,19 @@ const Home = () => {
             .then((res) => {
                 setDbUser(res.data)
                 if(res.data.auth0Id == null || res.data.auth0Id == ""){
-                    setUserMetadata(res.data._id)
+                    if(dbUser){
+                        axios.put(process.env.NEXT_PUBLIC_API_BASE_URL + '/users/' + id, {
+                            email: user.email,
+                            name: user.name,
+                            auth0Id: user.sub
+                        }).then((res) => {
+                            console.log(res)
+                        }
+                        ).catch((err) => {
+                            console.log(err)
+                        }
+                        )   
+                    }
                     console.log('updated user metadata')
                 }
             })
@@ -52,7 +47,7 @@ const Home = () => {
         } else {
             console.log('no user')
         }
-    }, [user])
+    }, [dbUser, user])
 
 
 return !dbUser ? (
