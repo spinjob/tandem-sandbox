@@ -1,6 +1,6 @@
 import type {NextPage} from 'next'
 import Head from 'next/head'
-import Landing from './landing.js'
+import Landing from './landing'
 
 const Index: NextPage = () => {
   return(
