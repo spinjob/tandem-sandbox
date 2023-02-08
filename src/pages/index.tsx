@@ -1,11 +1,6 @@
 import type {NextPage} from 'next'
-import { Text, Image } from '@mantine/core';
-import {UserContext} from '../context/UserContext'
 import Head from 'next/head'
-import RegistrationForm from '../components/RegistrationForm'
-import { useState } from 'react';
-import Landing from './Landing.js'
-import { useUser } from '@auth0/nextjs-auth0/client'
+import Landing from './landing.js'
 
 const Index: NextPage = () => {
   return(

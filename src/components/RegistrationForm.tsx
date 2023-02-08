@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import {useFormik} from 'formik'
-import {Router, useRouter} from 'next/router'
+import {useRouter} from 'next/navigation'
 import {Text, Button, PasswordInput, Anchor} from '@mantine/core'
 import * as yup from 'yup'
 import axios from 'axios'

@@ -1,6 +1,6 @@
 import { Navbar, createStyles, Group, Code, Image,Text} from "@mantine/core";
 import { useState, useCallback, useEffect } from "react";
-import {Router, useRouter} from 'next/router'
+import {useRouter} from 'next/navigation'
 import {UserContext} from '../context/UserContext'
 import {MdConnectWithoutContact} from 'react-icons/md'
 import {CgListTree} from 'react-icons/cg'
@@ -8,7 +8,7 @@ import {BiBuildings} from 'react-icons/bi'
 import {useUser} from '@auth0/nextjs-auth0/client'
 
 
-const Navigation = () => {
+const Navigation = ({setView}) => {
     const { user, error, isLoading } = useUser();
     const router = useRouter()
 
@@ -36,8 +36,7 @@ const Navigation = () => {
             display: 'flex',
             alignItems: 'center',
             textDecoration: 'none',
-            fontFamily: 'Visuelt, medium',
-            fontSize: theme.fontSizes.sm,
+            fontFamily: 'Visuelt',
             color: theme.colorScheme === 'dark' ? theme.colors.dark[1] : theme.colors.gray[7],
             padding: `${theme.spacing.xs}px ${theme.spacing.sm}px`,
             borderRadius: theme.radius.sm,
@@ -72,6 +71,7 @@ const Navigation = () => {
           },
         };
       });
+
     const { classes, cx } = useStyles();
     const [active, setActive] = useState('Billing');
 
@@ -102,6 +102,7 @@ const Navigation = () => {
       key={item.label}
       onClick={(event) => {
         event.preventDefault();
+        setView(item)
         setActive(item.label);
       }}
     >
@@ -129,7 +130,7 @@ const Navigation = () => {
                 </a>
                 <a className={classes.link} onClick={()=> router.push('/api/auth/logout')}>
                     <div style={{alignItems: 'center', display:'flex', flexDirection: 'row', width: 200, height: 50,borderRadius: '5px', overflow: 'hidden'}}>
-                        <Image style={{width: 30, height: 30}} layout="fill" objectFit="cover" src={user?.picture}/>
+                        <Image style={{width: 30, height: 30}} layout="fill" src={user?.picture}/>
                         <Text style={{paddingLeft: 10}}>{user?.name}</Text>
                     </div>
                 </a>
